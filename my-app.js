@@ -10,10 +10,25 @@ var app = new Framework7({
         swipe: true,
     },
     // Add default routes
-    routes: [
+    routes: [{
+            name: 'admin',
+            path: '/admin/',
+            url: 'DonateMe/pages/login.html',
+        },
         {
-            path: '/about/',
-            url: 'about.html',
+            name: 'AboutUs',
+            path: '/AboutUs/',
+            url: 'DonateMe/pages/AboutUs.html',
+        },
+        {
+            name: 'Home',
+            path: '/Home/',
+            url: 'index.html',
+        },
+        {
+            name: '404',
+            path: '(.*)',
+            url: 'DonateMe/pages//404.html',
         },
     ],
     // ... other parameters
