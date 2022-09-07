@@ -48,7 +48,7 @@ const HomePage = () => (
             <br />
             <small style={{ opacity: 0.8 }}>Help & Grow</small>
           </CardHeader>
-          <img src="../img/foodimg1.jpg " width="100%" />
+          <img src="https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/foodimg1.jpg" width="100%" />
         </div>
       </CardContent>
     </Card>
@@ -63,7 +63,7 @@ const HomePage = () => (
             <br />
             <small style={{ opacity: 0.8 }}>Help & Grow</small>
           </CardHeader>
-          <img src="../img/clothimg-1.png " width="100%" />
+          <img src="https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/clothimg-1.png " width="100%" />
         </div>
       </CardContent>
     </Card>
@@ -77,7 +77,7 @@ const HomePage = () => (
             <br />
             <small style={{ opacity: 0.8 }}>Help & Grow</small>
           </CardHeader>
-          <img src="../img/plant-1.jpg " width="100%" />
+          <img src="https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/plant-1.jpg " width="100%" />
         </div>
       </CardContent>
     </Card>
@@ -92,7 +92,7 @@ const HomePage = () => (
             <br />
             <small style={{ opacity: 0.8 }}>Help & Grow</small>
           </CardHeader>
-          <img src="../img/clothimg-1.png " width="100%" />
+          <img src="https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/animal-1.jpg " width="100%" />
         </div>
       </CardContent>
     </Card>
