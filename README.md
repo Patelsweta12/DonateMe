@@ -2,29 +2,6 @@
 
 ## Framework7 CLI Options
 
-Framework7 app created with following options:
-
-```
-{
-  "cwd": "C:\\Users\\alayp\\Downloads\\startIt",
-  "type": [
-    "web"
-  ],
-  "name": "Donate Me",
-  "framework": "react",
-  "template": "split-view",
-  "bundler": "vite",
-  "cssPreProcessor": false,
-  "theming": {
-    "customColor": true,
-    "color": "#ff9000",
-    "darkTheme": false,
-    "iconFonts": true,
-    "fillBars": false
-  },
-  "customBuild": false
-}
-```
 
 ## Install Dependencies
 
