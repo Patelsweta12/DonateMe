@@ -1,17 +1,12 @@
-
 import HomePage from '../pages/home.jsx';
 import AboutPage from '../pages/about.jsx';
 import FormPage from '../pages/form.jsx';
-
-import LeftPage1 from '../pages/left-page-1.jsx';
-import LeftPage2 from '../pages/left-page-2.jsx';
 import DynamicRoutePage from '../pages/dynamic-route.jsx';
 import RequestAndLoad from '../pages/request-and-load.jsx';
 import NotFoundPage from '../pages/404.jsx';
 import AdminPortal from '../pages/login.jsx';
 
-var routes = [
-  {
+var routes = [{
     path: '/',
     component: HomePage,
   },
@@ -27,22 +22,17 @@ var routes = [
     path: '/form/',
     component: FormPage,
   },
-
-  {
-    path: '/left-page-1/',
-    component: LeftPage1,
-  },
-  {
-    path: '/left-page-2/',
-    component: LeftPage2,
-  },
   {
     path: '/dynamic-route/blog/:blogId/post/:postId/',
     component: DynamicRoutePage,
   },
   {
     path: '/request-and-load/user/:userId/',
-    async: function ({ router, to, resolve }) {
+    async: function ({
+      router,
+      to,
+      resolve
+    }) {
       // App instance
       var app = router.app;
 
@@ -59,8 +49,7 @@ var routes = [
           firstName: 'Vladimir',
           lastName: 'Kharlampidi',
           about: 'Hello, i am creator of Framework7! Hope you like it!',
-          links: [
-            {
+          links: [{
               title: 'Framework7 Website',
               url: 'http://framework7.io',
             },
@@ -74,16 +63,13 @@ var routes = [
         app.preloader.hide();
 
         // Resolve route to load page
-        resolve(
-          {
-            component: RequestAndLoad,
-          },
-          {
-            props: {
-              user: user,
-            }
+        resolve({
+          component: RequestAndLoad,
+        }, {
+          props: {
+            user: user,
           }
-        );
+        });
       }, 1000);
     },
   },

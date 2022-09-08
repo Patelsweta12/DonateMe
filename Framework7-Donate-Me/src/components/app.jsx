@@ -63,18 +63,18 @@ const MyApp = () => {
       <Panel left cover dark visibleBreakpoint={960}>
         <View>
           <Page>
-            <Navbar title="Left Panel" />
-            <BlockTitle>Left View Navigation</BlockTitle>
+            <Navbar title="Menu" />
+            <BlockTitle>Services</BlockTitle>
             <List>
-              <ListItem link="/left-page-1/" title="Left Page 1" />
-              <ListItem link="/left-page-2/" title="Left Page 2" />
+              <ListItem link="/form/" view=".view-main" panelClose title="Form" />
             </List>
-            <BlockTitle>Control Main View</BlockTitle>
+            <BlockTitle>Information</BlockTitle>
+            <List>
+              <ListItem link="/about/" view=".view-main" panelClose title="About" />
+            </List>
+            <BlockTitle>Organization</BlockTitle>
             <List>
               <ListItem link="/AdminPortal/" view=".view-main" panelClose title="Admin Portal" />
-              <ListItem link="/about/" view=".view-main" panelClose title="About" />
-              <ListItem link="/form/" view=".view-main" panelClose title="Form" />
-              <ListItem link="#" view=".view-main" back panelClose title="Back in history" />
             </List>
           </Page>
         </View>
