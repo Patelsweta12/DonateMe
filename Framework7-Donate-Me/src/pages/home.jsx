@@ -98,6 +98,9 @@ const HomePage = () => (
     </Card>
 
 
+
+
+
     <BlockTitle>Navigation</BlockTitle>
     <List>
       <ListItem link="/about/" title="About" />

@@ -95,6 +95,7 @@ const MyApp = () => {
       {/* Your main view, should have "view-main" class */}
       <View main className="safe-areas" url="/" />
 
+
       {/* Popup */}
       <Popup id="my-popup">
         <View>

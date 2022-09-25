@@ -1,11 +1,11 @@
 import HomePage from '../pages/home.jsx';
 import AboutPage from '../pages/about.jsx';
 import FormPage from '../pages/form.jsx';
+import footer from '../pages/footer.jsx';
 import DynamicRoutePage from '../pages/dynamic-route.jsx';
 import RequestAndLoad from '../pages/request-and-load.jsx';
 import NotFoundPage from '../pages/404.jsx';
 import AdminPortal from '../pages/login.jsx';
-
 var routes = [{
     path: '/',
     component: HomePage,
@@ -21,6 +21,10 @@ var routes = [{
   {
     path: '/form/',
     component: FormPage,
+  },
+  {
+    path: '/footer/',
+    component: footer,
   },
   {
     path: '/dynamic-route/blog/:blogId/post/:postId/',
