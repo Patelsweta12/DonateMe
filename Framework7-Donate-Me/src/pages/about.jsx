@@ -11,7 +11,7 @@ const AboutPage = () => (
       <CardContent padding={false}>
         <div className="bg-color-green" style={{ height: '700px' }}>
           <CardHeader textColor="white" className="display-block">
-            Our Mission :<br></br>
+            Our Mission-<br></br>
 
             Make India hunger free.
 
@@ -50,10 +50,7 @@ const AboutPage = () => (
       <CardContent padding={false}>
         <div className="bg-color-yellow" style={{ height: '800 x' }}>
           <CardHeader textColor="white" className="display-block">
-            The drivers of our mission
-            :<br></br>
-
-
+            The drivers of our mission-
 
             <br></br>  Tap to  READ more
             <br />
@@ -81,6 +78,38 @@ const AboutPage = () => (
           <p>
             Feeding India, a non-profit but just by help and support,and is dedicated towards making India hunger-free. With your  help , kitchens and donors, we are moving one step closer to our goal every day. Together, we believe, we can ensure everyone has access to food daily.
           </p>
+
+
+        </div>
+      </CardContent>
+    </Card>
+
+
+    <Card expandable>
+      <CardContent padding={false}>
+        <div className="bg-color-red" style={{ height: '800 x' }}>
+          <CardHeader textColor="white" className="display-block">
+            Other campaigns-
+            <br></br>  Tap to  READ more
+            <br />
+            <small style={{ opacity: 0.9 }}> <br></br> <img src="https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/animalGirl.png " width="100%" /></small>
+
+          </CardHeader>
+
+          <Link
+            cardClose
+            color="white"
+            className="card-opened-fade-in"
+            style={{ position: 'absolute', right: '15px', top: '15px' }}
+            iconF7="xmark_circle_fill"
+          /><br></br>
+
+        </div>
+        <div className="card-content-padding"><br></br>
+          <p>
+            We also deal with the services like Cloth Donation, Animal Walfare, Tree Plantation.
+          </p>
+
 
 
         </div>
