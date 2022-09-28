@@ -91,8 +91,13 @@ const AboutPage = () => (
           <CardHeader textColor="white" className="display-block">
             Other campaigns-
             <br></br>  Tap to  READ more
-            <br />
+
             <small style={{ opacity: 0.9 }}> <br></br> <img src="https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/animalGirl.png " width="100%" /></small>
+            <br />
+            <small style={{ opacity: 0.9 }}> <br></br> <img src=" https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/clothkids.jpg" width="100%" /></small>
+
+            <br />
+            <small style={{ opacity: 0.9 }}> <br></br> <img src=" https://raw.githubusercontent.com/Patelsweta12/DonateMe/main/Framework7-Donate-Me/src/img/treeplantationHori.jpg" width="100%" /></small>
 
           </CardHeader>
 
