@@ -1,15 +1,18 @@
 import React from 'react';
-import { Page, Navbar, Block, BlockTitle, List, Icon, Card, CardContent, CardHeader, Link, CardFooter } from 'framework7-react';
+import { Page, Navbar, Toolbar, BlockTitle, List, Icon, Card, CardContent, CardHeader, Link, CardFooter } from 'framework7-react';
 
 const AboutPage = () => (
   <Page>
     <Navbar title="About" backLink="Back" />
-
+    {/* Toolbar */}
+    <Toolbar bottom>
+      <Link>Right Link</Link>
+    </Toolbar>
 
 
     <Card expandable>
       <CardContent padding={false}>
-        <div className="bg-color-green" style={{ height: '700px' }}>
+        <div className="bg-color-green" style={{ height: '500px' }}>
           <CardHeader textColor="white" className="display-block">
             Our Mission-<br></br>
 
@@ -112,7 +115,7 @@ const AboutPage = () => (
         </div>
         <div className="card-content-padding"><br></br>
           <p>
-            We also deal with the services like Cloth Donation, Animal Walfare, Tree Plantation.
+            We also deal with the services like Cloth Donation, Animal Walfare and  Tree Plantation. Anyone who is willing to serve, is welcomed here. Our cloth donation service will be helpful to the people who cannot afford to buy clothes,moreover this is the platform where kindness to animal is served. We also care for our environment and shows gratitude by introducing tree plantation campaigns in different area like schools, societies, parks and many more, so being a part of this is happiness in itself.
           </p>
 
 

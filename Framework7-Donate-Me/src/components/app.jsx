@@ -64,15 +64,15 @@ const MyApp = () => {
         <View>
           <Page>
             <Navbar title="Menu" />
-            <BlockTitle>Services</BlockTitle>
+
             <List>
               <ListItem link="/form/" view=".view-main" panelClose title="Form" />
             </List>
-            <BlockTitle>Information</BlockTitle>
+
             <List>
               <ListItem link="/about/" view=".view-main" panelClose title="About" />
             </List>
-            <BlockTitle>Organization</BlockTitle>
+
             <List>
               <ListItem link="/AdminPortal/" view=".view-main" panelClose title="Admin Portal" />
             </List>

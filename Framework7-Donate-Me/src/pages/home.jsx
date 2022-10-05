@@ -33,7 +33,6 @@ const HomePage = () => (
     </Navbar>
     {/* Toolbar */}
     <Toolbar bottom>
-      <Link>Left Link</Link>
       <Link>Right Link</Link>
     </Toolbar>
     {/* Page content */}
@@ -97,16 +96,6 @@ const HomePage = () => (
       </CardContent>
     </Card>
 
-
-
-
-
-    <BlockTitle>Navigation</BlockTitle>
-    <List>
-      <ListItem link="/about/" title="About" />
-      <ListItem link="/form/" title="Form" />
-    </List>
-
     <BlockTitle>Modals</BlockTitle>
     <Block strong>
       <Row>
@@ -114,34 +103,11 @@ const HomePage = () => (
           <Button fill raised popupOpen="#my-popup">Popup</Button>
         </Col>
         <Col width="50">
-          <Button fill raised loginScreenOpen="#my-login-screen">Login Screen</Button>
+          <Button fill raised loginScreenOpen="#my-login-screen">Organization Log In</Button>
         </Col>
       </Row>
     </Block>
 
-    <BlockTitle>Panels</BlockTitle>
-    <Block strong>
-      <Row>
-        <Col width="50">
-          <Button fill raised panelOpen="left">Left Panel</Button>
-        </Col>
-      </Row>
-    </Block>
-
-    <List>
-      <ListItem
-        title="Dynamic (Component) Route"
-        link="/dynamic-route/blog/45/post/125/?foo=bar#about"
-      />
-      <ListItem
-        title="Default Route (404)"
-        link="/load-something-that-doesnt-exist/"
-      />
-      <ListItem
-        title="Request Data & Load"
-        link="/request-and-load/user/123456/"
-      />
-    </List>
   </Page>
 );
 export default HomePage;

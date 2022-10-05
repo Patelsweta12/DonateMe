@@ -5,19 +5,24 @@ import {
   List,
   ListInput,
   ListItem,
-  Toggle,
+  Toolbar,
   BlockTitle,
-  Row,
+  Link,
   Button,
   Range,
   Block
 } from 'framework7-react';
 
 const FormPage = () => (
-  <Page name="form">
-    <Navbar title="Form" backLink="Back"></Navbar>
+  <Page name="Donation Request Form">
+    <Navbar title="Donation Request Form" backLink="Back"></Navbar>
 
-    <BlockTitle>Form Example</BlockTitle>
+    {/* Toolbar */}
+    <Toolbar bottom>
+      <Link>Right Link</Link>
+    </Toolbar>
+
+    <BlockTitle>Your Details</BlockTitle>
     <List noHairlinesMd>
       <ListInput
         label="Name"
@@ -26,102 +31,69 @@ const FormPage = () => (
       ></ListInput>
 
       <ListInput
-        label="E-mail"
-        type="email"
-        placeholder="E-mail"
-      ></ListInput>
-
-      <ListInput
-        label="URL"
-        type="url"
-        placeholder="URL"
-      ></ListInput>
-
-      <ListInput
-        label="Password"
-        type="password"
-        placeholder="Password"
-      ></ListInput>
-
-      <ListInput
-        label="Phone"
+        label="WhatsApp Phone Number"
         type="tel"
         placeholder="Phone"
       ></ListInput>
 
-      <ListInput
-        label="Gender"
-        type="select"
-      >
-        <option>Male</option>
-        <option>Female</option>
-      </ListInput>
 
-      <ListInput
-        label="Birth date"
-        type="date"
-        placeholder="Birth day"
-        defaultValue="2014-04-30"
-      ></ListInput>
+      <BlockTitle>Choose Donation service</BlockTitle>
+      <List>
+        <ListItem
+          radio
+          name="radio"
+          value="Food Donation"
+          title="Food Donation"
+        ></ListItem>
+        <ListItem
+          radio
+          name="radio"
+          value="Clothes Donation"
+          title="clothes Donation"
+        ></ListItem>
+        <ListItem
+          radio
+          name="radio"
+          value="Animal Walfare"
+          title="Animal Walfare"
+        ></ListItem>
+
+        <ListItem
+          radio
+          name="radio"
+          value="Tree Plantation"
+          title="Tree Plantation"
+        ></ListItem>
 
 
 
 
+      </List>
 
-      <ListInput
-        type="textarea"
-        label="Resizable"
-        placeholder="Bio"
-        resizable
-      ></ListInput>
+      <BlockTitle>Donation Discription</BlockTitle>
+      <List>
+        <ListInput
+          type="textarea"
+          placeholder="Provide Details"
+          resizable
+        ></ListInput>
+      </List>
+
+      <BlockTitle>Location service </BlockTitle>
+      <List>
+        <ListItem
+          checkbox
+          name="my-checkbox"
+          value="Use my current location"
+          title="Use my current location"
+        ></ListItem>
+
+      </List>
+
     </List>
 
 
-
-    <BlockTitle>Checkbox group</BlockTitle>
-    <List>
-      <ListItem
-        checkbox
-        name="my-checkbox"
-        value="Books"
-        title="Books"
-      ></ListItem>
-      <ListItem
-        checkbox
-        name="my-checkbox"
-        value="Movies"
-        title="Movies"
-      ></ListItem>
-      <ListItem
-        checkbox
-        name="my-checkbox"
-        value="Food"
-        title="Food"
-      ></ListItem>
-    </List>
-
-    <BlockTitle>Radio buttons group</BlockTitle>
-    <List>
-      <ListItem
-        radio
-        name="radio"
-        value="Books"
-        title="Books"
-      ></ListItem>
-      <ListItem
-        radio
-        name="radio"
-        value="Movies"
-        title="Movies"
-      ></ListItem>
-      <ListItem
-        radio
-        name="radio"
-        value="Food"
-        title="Food"
-      ></ListItem>
-    </List>
-  </Page>
+  </Page >
 );
 
 export default FormPage;

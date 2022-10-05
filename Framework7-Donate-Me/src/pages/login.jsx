@@ -46,7 +46,6 @@ export default ({ f7router }) => {
                 <BlockFooter>
                     Log in to organizational Admin Portal.
                     <br />
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </BlockFooter>
             </List>
         </Page>
