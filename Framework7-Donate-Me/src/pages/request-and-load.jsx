@@ -1,5 +1,5 @@
-import React from 'react';
-import { Page, Navbar, Block, List, ListItem } from 'framework7-react';
+import React from "react";
+import { Page, Navbar, Block, List, ListItem } from "framework7-react";
 
 const RequestAndLoad = (props) => {
   const { user } = props;
@@ -7,9 +7,7 @@ const RequestAndLoad = (props) => {
   return (
     <Page>
       <Navbar title={`${user.firstName} ${user.lastName}`} backLink="Back" />
-      <Block strong>
-        {user.about}
-      </Block>
+      <Block strong>{user.about}</Block>
       <List>
         {user.links.map((link, index) => (
           <ListItem
@@ -23,6 +21,6 @@ const RequestAndLoad = (props) => {
       </List>
     </Page>
   );
-}
+};
 
 export default RequestAndLoad;

@@ -10,10 +10,19 @@ import {
   Link,
   Button,
   Range,
-  Block
+  Block,
+  f7,
 } from 'framework7-react';
 
+const Submit = () => {
+  f7.dialog.alert(`Will do, Later`, () => {
+    <Link href="/Form/"></Link>
+  });
+};
+
+
 const FormPage = () => (
+
   <Page name="Donation Request Form">
     <Navbar title="Donation Request Form" backLink="Back"></Navbar>
 
@@ -89,6 +98,11 @@ const FormPage = () => (
         ></ListItem>
 
       </List>
+
+      <BlockTitle>Submit Details</BlockTitle>
+      <Block strong>
+        <Button fill onClick={Submit}>Submit</Button>
+      </Block>
 
     </List>
 

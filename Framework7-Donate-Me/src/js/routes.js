@@ -6,6 +6,7 @@ import DynamicRoutePage from '../pages/dynamic-route.jsx';
 import RequestAndLoad from '../pages/request-and-load.jsx';
 import NotFoundPage from '../pages/404.jsx';
 import AdminPortal from '../pages/login.jsx';
+import RegisterOrganization from '../pages/registerOrganization.jsx'
 var routes = [{
     path: '/',
     component: HomePage,
@@ -13,6 +14,10 @@ var routes = [{
   {
     path: '/AdminPortal/',
     component: AdminPortal,
+  },
+  {
+    path: '/RegisterOrganization/',
+    component: RegisterOrganization,
   },
   {
     path: '/about/',
