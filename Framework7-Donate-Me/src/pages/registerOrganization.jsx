@@ -25,8 +25,8 @@ export default ({ f7router }) => {
   };
 
   return (
-    <Page name="Register Organization">
-      <Navbar title="Register Organization" backLink="Back"></Navbar>
+    <Page name="Register Your Organization">
+      <Navbar title="Register Your Organization" backLink="Back"></Navbar>
 
       {/* Toolbar */}
       <Toolbar bottom>
@@ -62,7 +62,16 @@ export default ({ f7router }) => {
         <ListInput
           label="Password"
           type="password"
-          placeholder="Your password"
+          placeholder="Create Password"
+          value={password}
+          onInput={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+         <ListInput
+          label="Re-Enter Password"
+          type="password"
+          placeholder="Re-Enter Password"
           value={password}
           onInput={(e) => {
             setPassword(e.target.value);
