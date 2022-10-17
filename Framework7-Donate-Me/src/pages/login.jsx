@@ -8,6 +8,7 @@ import {
   ListButton,
   BlockFooter,
   Link,
+
 } from "framework7-react";
 
 export default ({ f7router }) => {
@@ -19,7 +20,7 @@ export default ({ f7router }) => {
     });
   };
   const registerNow = () => {
-    
+
   };
 
   return (

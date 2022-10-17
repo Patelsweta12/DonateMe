@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
   Page,
   Navbar,
@@ -14,14 +14,37 @@ import {
   f7,
 } from 'framework7-react';
 
-const Submit = () => {
-  f7.dialog.alert(`Will do, Later`, () => {
-    <Link href="/Form/"></Link>
-  });
+
+
+export default ({ f7router }) => {
+
+  const [DonorName, setDonorName] = useState("");
+  const [DonorPhone, setDonorPhone] = useState("");
+  const [FoodDonation,] = useState("");
+  handleChange = e => {
+    const { name, value } = e.target;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
+
+
+};
+
+const submitForm = () => {
+  console.log(`Donor name : ${DonorName}`)
+  console.log(`Donor Phone : ${DonorPhone}`)
+  console.log(`Donation type : ${FoodDonation}`)
 };
 
 
-const FormPage = () => (
+
+
+
+return (
+
 
   <Page name="Donation Request Form">
     <Navbar title="Donation Request Form" backLink="Back"></Navbar>
@@ -37,12 +60,20 @@ const FormPage = () => (
         label="Name"
         type="text"
         placeholder="Your name"
+        value={DonorName}
+        onInput={(e) => {
+          setDonorName(e.target.value);
+        }}
       ></ListInput>
 
       <ListInput
         label="WhatsApp Phone Number"
         type="tel"
         placeholder="Phone"
+        value={DonorPhone}
+        onInput={(e) => {
+          setDonorPhone(e.target.value);
+        }}
       ></ListInput>
 
 
@@ -51,8 +82,10 @@ const FormPage = () => (
         <ListItem
           radio
           name="radio"
-          value="Food Donation"
+          value={FoodDonation}
           title="Food Donation"
+          onChange={this.handleChange}
+
         ></ListItem>
         <ListItem
           radio
@@ -101,7 +134,7 @@ const FormPage = () => (
 
       <BlockTitle>Submit Details</BlockTitle>
       <Block strong>
-        <Button fill onClick={Submit}>Submit</Button>
+        <Button fill onClick={submitForm}>Submit</Button>
       </Block>
 
     </List>
@@ -110,4 +143,4 @@ const FormPage = () => (
   </Page >
 );
 
-export default FormPage;
+};
