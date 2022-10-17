@@ -1,4 +1,5 @@
-import React, { useState, setInputs } from "react";
+import React, { useState, setInputs, Component } from "react";
+import { geolocated } from "react-geolocated";
 import {
   Page,
   Navbar,
@@ -14,7 +15,7 @@ import {
   f7,
 } from "framework7-react";
 
-export default ({ f7router }) => {
+export default ({ f7router, Component }) => {
   const [DonorName, setDonorName] = useState("");
   const [DonorPhone, setDonorPhone] = useState("");
   const [FoodDonation, setFoodDonation] = useState("");
@@ -27,7 +28,29 @@ export default ({ f7router }) => {
 
   const handleLocationChecker = (e) => {
     if (e.target.checked === true) {
-      setLocation(`Joiye chhe... joiye chhee`);
+      if (!navigator.geolocation) {
+        f7.dialog.alert(`Geolocation is not supported by your device.`, () => {
+          f7router.back();
+        });
+      } else {
+        console.log("Locating...");
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            let mapsUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
+            setLocation(mapsUrl);
+            console.log(`[${latitude},${longitude}]`);
+          },
+          () => {
+            f7.dialog.alert(`Unable to retrieve your location`, () => {
+              f7router.back();
+            });
+          }
+        );
+      }
+
+      // setLocation(`Joiye chhe... joiye chhee`);
     } else {
       setLocation(`ni juve hutt`);
     }
@@ -37,8 +60,12 @@ export default ({ f7router }) => {
     console.log(`Donor name : ${DonorName}`);
     console.log(`Donor Phone : ${DonorPhone}`);
     console.log(`Donation type : ${FoodDonation}`);
-    console.log(`Donation type : ${DonationDesc}`);
+    console.log(`Donation Description : ${DonationDesc}`);
     console.log(`Location Current : ${LocationCheck}`);
+    f7.dialog.alert(
+      `Donor name : ${DonorName}, Donor Phone : ${DonorPhone}, Donation type : ${FoodDonation}, Donation Description : ${DonationDesc}, Location Current : ${LocationCheck}`
+    ),
+      () => {};
   };
 
   return (
