@@ -26,17 +26,13 @@ export default ({ f7router }) => {
   const RegisterNow = () => {
     console.log(`Organization Name : ${YourOrgName}`);
     console.log(`Organization Email : ${YourOrgEmail}`);
-    console.log(`Phone Number : ${OrgPhone}`);
-    console.log(`UserName : ${Username}`);
-    console.log(`Password : ${password}`);
-    console.log(`Re-Enter Password : ${reEnterPassword}`);
+    console.log(`Phone Number : ${SetOrgPhone}`);
+    console.log(`UserName : ${SetUsername}`);
+    console.log(`Password : ${setPassword}`);
+    console.log(`Re-Enter Password : ${setReEnterPassword}`);
 
     f7.dialog.alert(
-      `Organization Name : ${YourOrgName} , Organization Email : ${YourOrgEmail}
-   , Phone Number : ${OrgPhone}
-   , UserName : ${Username}
-   , Password : ${password}
-   , Re-Enter Password : ${reEnterPassword}`,
+      `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
       () => {}
     );
   };

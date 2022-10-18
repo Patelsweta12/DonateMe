@@ -63,7 +63,7 @@ export default ({ f7router, Component }) => {
     console.log(`Donation Description : ${DonationDesc}`);
     console.log(`Location Current : ${LocationCheck}`);
     f7.dialog.alert(
-      `Donor name : ${DonorName}, Donor Phone : ${DonorPhone}, Donation type : ${FoodDonation}, Donation Description : ${DonationDesc}, Location Current : ${LocationCheck}`
+      `Donor name : ${DonorName}<br>Donor Phone : ${DonorPhone}<br>Donation type : ${FoodDonation}<br>Donation Description : ${DonationDesc}<br>Location Current : ${LocationCheck}`
     ),
       () => {};
   };
