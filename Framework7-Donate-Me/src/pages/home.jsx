@@ -115,9 +115,9 @@ const HomePage = () => (
           </Button>
         </Col>
         <Col width="50">
-          <Button fill raised loginScreenOpen="#my-login-screen">
+          {/* <Button fill raised loginScreenOpen="#my-login-screen">
             Organization Log In
-          </Button>
+          </Button> */}
         </Col>
       </Row>
     </Block>

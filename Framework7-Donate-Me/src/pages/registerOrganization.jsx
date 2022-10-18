@@ -16,12 +16,29 @@ import {
 } from "framework7-react";
 
 export default ({ f7router }) => {
+  const [YourOrgName, SetYourOrgName] = useState("");
+  const [YourOrgEmail, SetYourOrgEmail] = useState("");
+  const [OrgPhone, SetOrgPhone] = useState("");
+  const [Username, SetUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [reEnterPassword, setReEnterPassword] = useState("");
 
-  const Register = () => {
-    f7.dialog.alert(`Will do, Later`, () => {
-      f7router.back();
-    });
+  const RegisterNow = () => {
+    console.log(`Organization Name : ${YourOrgName}`);
+    console.log(`Organization Email : ${YourOrgEmail}`);
+    console.log(`Phone Number : ${OrgPhone}`);
+    console.log(`UserName : ${Username}`);
+    console.log(`Password : ${password}`);
+    console.log(`Re-Enter Password : ${reEnterPassword}`);
+
+    f7.dialog.alert(
+      `Organization Name : ${YourOrgName} , Organization Email : ${YourOrgEmail}
+   , Phone Number : ${OrgPhone}
+   , UserName : ${Username}
+   , Password : ${password}
+   , Re-Enter Password : ${reEnterPassword}`,
+      () => {}
+    );
   };
 
   return (
@@ -39,16 +56,28 @@ export default ({ f7router }) => {
           label="Name"
           type="text"
           placeholder="Your Organization Name"
+          value={YourOrgName}
+          onInput={(e) => {
+            SetYourOrgName(e.target.value);
+          }}
         ></ListInput>
         <ListInput
           label="Email"
           type="text"
           placeholder="Your Organization Email"
+          value={YourOrgEmail}
+          onInput={(e) => {
+            SetYourOrgEmail(e.target.value);
+          }}
         ></ListInput>
         <ListInput
           label="WhatsApp Phone Number"
           type="tel"
           placeholder="Phone"
+          value={OrgPhone}
+          onInput={(e) => {
+            SetOrgPhone(e.target.value);
+          }}
         ></ListInput>
       </List>
 
@@ -58,6 +87,10 @@ export default ({ f7router }) => {
           label="Username"
           type="text"
           placeholder="Choose UserName"
+          value={Username}
+          onInput={(e) => {
+            SetUsername(e.target.value);
+          }}
         ></ListInput>
         <ListInput
           label="Password"
@@ -68,20 +101,21 @@ export default ({ f7router }) => {
             setPassword(e.target.value);
           }}
         />
-         <ListInput
+        <ListInput
           label="Re-Enter Password"
           type="password"
           placeholder="Re-Enter Password"
-          value={password}
+          value={reEnterPassword}
           onInput={(e) => {
-            setPassword(e.target.value);
+            setReEnterPassword(e.target.value);
           }}
         />
       </List>
 
       <BlockTitle>Submit Details</BlockTitle>
       <Block strong>
-        <Button fill onClick={Register}>Register
+        <Button fill onClick={RegisterNow}>
+          Register
         </Button>
       </Block>
     </Page>
