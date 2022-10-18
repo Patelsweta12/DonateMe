@@ -72,11 +72,6 @@ export default ({ f7router, Component }) => {
     <Page name="Donation Request Form">
       <Navbar title="Donation Request Form" backLink="Back"></Navbar>
 
-      {/* Toolbar */}
-      <Toolbar bottom>
-        <Link>Right Link</Link>
-      </Toolbar>
-
       <BlockTitle>Your Details</BlockTitle>
       <List noHairlinesMd>
         <ListInput

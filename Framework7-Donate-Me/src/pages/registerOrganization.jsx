@@ -19,6 +19,7 @@ export default ({ f7router }) => {
   const [YourOrgName, SetYourOrgName] = useState("");
   const [YourOrgEmail, SetYourOrgEmail] = useState("");
   const [OrgPhone, SetOrgPhone] = useState("");
+  const [YourCity, SetYourCity] = useState("");
   const [Username, SetUsername] = useState("");
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
@@ -27,12 +28,13 @@ export default ({ f7router }) => {
     console.log(`Organization Name : ${YourOrgName}`);
     console.log(`Organization Email : ${YourOrgEmail}`);
     console.log(`Phone Number : ${SetOrgPhone}`);
+    console.log(`City : ${YourCity}`);
     console.log(`UserName : ${SetUsername}`);
     console.log(`Password : ${setPassword}`);
     console.log(`Re-Enter Password : ${setReEnterPassword}`);
 
     f7.dialog.alert(
-      `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
+      `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br> City : ${YourCity}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
       () => {}
     );
   };
@@ -73,6 +75,16 @@ export default ({ f7router }) => {
           value={OrgPhone}
           onInput={(e) => {
             SetOrgPhone(e.target.value);
+          }}
+        ></ListInput>
+
+        <ListInput
+          label="City"
+          type="text"
+          placeholder="City"
+          value={YourCity}
+          onInput={(e) => {
+            SetYourCity(e.target.value);
           }}
         ></ListInput>
       </List>
