@@ -14,6 +14,8 @@ import {
   ListButton,
   f7,
 } from "framework7-react";
+import {db} from '../js/firebase'
+import { collection, addDoc } from "firebase/firestore"; 
 
 export default ({ f7router }) => {
   const [YourOrgName, SetYourOrgName] = useState("");
@@ -33,9 +35,35 @@ export default ({ f7router }) => {
     console.log(`Password : ${setPassword}`);
     console.log(`Re-Enter Password : ${setReEnterPassword}`);
 
+
+    if(password === reEnterPassword){
+      const docRef = addDoc(collection(db, "OrganizationUser"), {
+        org_Name: YourOrgName,
+        org_Email: YourOrgEmail,
+        org_phone: OrgPhone,
+        org_city: YourCity,
+        org_userName: Username,
+        org_password: password
+      });
+      console.log("Document written with ID: ", docRef.id);
+    }else{
+      f7.dialog.alert(
+        `Password and Re-Enter Password should be same`,
+        () => {}
+      );
+    }
+
     f7.dialog.alert(
       `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br> City : ${YourCity}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
       () => {}
+    );
+
+   
+
+    f7.dialog.alert(
+      `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br> City : ${YourCity}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
+      () => {}
+    
     );
   };
 
