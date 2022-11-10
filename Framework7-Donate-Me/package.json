@@ -19,7 +19,6 @@
     "Samsung >= 12"
   ],
   "dependencies": {
-    "aws-sdk": "^2.1251.0",
     "deploy-react": "^2.2.11",
     "dom7": "^4.0.4",
     "framework7": "^7.0.7",

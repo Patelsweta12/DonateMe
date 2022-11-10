@@ -14,46 +14,6 @@ import {
   ListButton,
   f7,
 } from "framework7-react";
-import AWS from "aws-sdk"
-
-const DynamoDB = new AWS.DynamoDB.DocumentClient({
-  region: "us-east-1",
-  accessKeyId: "AKIAY24XYFYLRBZBOGD7",
-  secretAccessKey: "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"
-});
-
-function addNewOrg(OrgName, OrgEmail, OrgPhone, OrgCity, UserName, password) {
-  //First Check if Org already been registered or not. 
-
-
-}
-
-
-export function ifUserAlreadyInDB(OrgEmail){
-  DynamoDB
-  .get({
-    TableName: "users",
-    Key: {
-      email_id: OrgEmail,
-    },
-  })
-  .promise()
-  .then(data => {
-    try {
-      if(data.Item.email_id === OrgEmail){
-        f7.dialog.alert(
-          `User ${OrgEmail} is already in db`,
-          () => {}
-        );
-    }else{
-      return false
-    }
-    } catch (error) {
-      return false
-    }
-  })
-  .catch(console.error)
-} 
 
 export default ({ f7router }) => {
   const [YourOrgName, SetYourOrgName] = useState("");
@@ -72,8 +32,6 @@ export default ({ f7router }) => {
     console.log(`UserName : ${SetUsername}`);
     console.log(`Password : ${setPassword}`);
     console.log(`Re-Enter Password : ${setReEnterPassword}`);
-
-    ifUserAlreadyInDB(YourOrgEmail);
 
     f7.dialog.alert(
       `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br> City : ${YourCity}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
