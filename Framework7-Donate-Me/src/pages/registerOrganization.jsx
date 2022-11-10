@@ -18,8 +18,8 @@ import AWS from "aws-sdk"
 
 const DynamoDB = new AWS.DynamoDB.DocumentClient({
   region: "us-east-1",
-  accessKeyId: "AKIAY24XYFYLQKAVX4CN",
-  secretAccessKey: "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"
+  accessKeyId: "AKIAY24XYFYLRBZBOGD7",
+  secretAccessKey: "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"
 });
 
 function addNewOrg(OrgName, OrgEmail, OrgPhone, OrgCity, UserName, password) {
