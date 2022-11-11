@@ -9,48 +9,175 @@ import {
   ListButton,
   BlockFooter,
   Link,
+  Navbar,
+  Toolbar,
+  BlockTitle,
+  Icon,
+  Card,
+  CardContent,
+  CardHeader,
+  CardFooter,
+  Button,
+  Block,
 } from "framework7-react";
 import { db } from "../js/firebase";
-import {
-  collection,
-  addDoc,
-  doc,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-} from "firebase/firestore";
+import { collection, addDoc, doc, getDocs } from "firebase/firestore";
 import { getDefaultAppConfig } from "@firebase/util";
 
 export default ({ f7router }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const signIn = () => {
-    var bytes = CryptoJS.AES.decrypt("use String here", "my-secret-key@123");
-    var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    console.log(decryptedPass);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigateToHome = async () => {
+    f7router.navigate("/Home/");
+  };
+
+  const navigateToRegisterOrg = async () => {
+    f7router.navigate("/RegisterOrganization/");
+  };
+
+  var userURl = "/request-and-load/user/";
+
+  const loginSuccess = async () => {
+    f7router.navigate(userURl);
+  };
+
+  const load = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    await signIn();
+  };
+
+  const signIn = async () => {
+    const isEnable = username.length > 0 && password.length > 0;
+
+    if (isEnable) {
+      const dataA = await getDocs(collection(db, "OrganizationUser"));
+      if (dataA.empty) {
+        f7.dialog.alert(
+          `Please get your Organization Registered.<br>
+           If aleady registerd, Please allow upto 24 hours for your organization to be approved.`,
+          () => {
+            setIsLoading(false);
+          }
+        );
+      } else {
+        var isUserEmailLocated = false;
+
+        var dbPassword = "NaN";
+        var isOrganizationRegistered = false;
+        var orgName = "NaN";
+
+        await dataA.forEach((doc) => {
+          try {
+            if (doc.data().org_Email === username) {
+              isUserEmailLocated = true;
+              console.log(doc.data());
+              dbPassword = doc.data().org_password;
+              isOrganizationRegistered = doc.data().org_verified;
+            }
+          } catch (error) {
+            f7.dialog.alert(`Error ${error}`, () => {
+              setIsLoading(false);
+              navigateToHome();
+            });
+          }
+        });
+
+        if (!isUserEmailLocated) {
+          f7.dialog.alert(
+            `Looks like your Organization has not been registered yet.<br>
+            Please click "OK" to register`,
+            () => {
+              setIsLoading(false);
+              navigateToRegisterOrg();
+            }
+          );
+        }
+
+        var isPasswordValidated = false;
+        var bytes = CryptoJS.AES.decrypt(dbPassword, "my-secret-key@123");
+        if (password === JSON.parse(bytes.toString(CryptoJS.enc.Utf8))) {
+          isPasswordValidated = true;
+        } else {
+          f7.dialog.alert(
+            `Please contact support team to get your password reset`,
+            "Invalid Password",
+            setIsLoading(false)
+          );
+        }
+
+        if (isUserEmailLocated && !isOrganizationRegistered) {
+          f7.dialog.alert(
+            `Looks like you have already submited Registration request<br>
+              Please allow upto 24 hours for your organization to be approved.`,
+            () => {
+              setIsLoading(false);
+              navigateToHome();
+            }
+          );
+        }
+
+        if (
+          isUserEmailLocated &&
+          isOrganizationRegistered &&
+          isPasswordValidated
+        ) {
+          userURl = userURl + `${username}/`;
+          loginSuccess();
+        }
+      }
+    } else {
+      f7.dialog.alert(
+        `Please fill in Organization Email and Password to Login`,
+        () => {
+          setIsLoading(false);
+        }
+      );
+    }
   };
 
   // f7.dialog.alert(`Username: ${username}<br>Password: ${password}`, () => {
   //   f7router.back();
   // });
   // };
-  const registerNow = () => {};
+  const AboutPage = () => (
+    <Page>
+      <Navbar title="About" backLink="Back" />
+      {/* Toolbar */}
+      <Toolbar bottom>
+        <Link>Right Link</Link>
+      </Toolbar>
+
+      <Card
+        title="Card header"
+        content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+        footer="Card footer"
+      ></Card>
+      <Card content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "></Card>
+    </Page>
+  );
 
   return (
     <Page noToolbar noNavbar noSwipeback loginScreen>
       <LoginScreenTitle>Admin Portal</LoginScreenTitle>
       <List form>
         <ListInput
-          label="Username"
-          type="text"
-          placeholder="Your username"
+          required
+          validate
+          label="Organization Email"
+          type="email"
+          placeholder="Type Your Organization Email"
           value={username}
           onInput={(e) => {
             setUsername(e.target.value);
           }}
         />
         <ListInput
+          required
+          validate
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
           label="Password"
           type="password"
           placeholder="Your password"
@@ -60,16 +187,24 @@ export default ({ f7router }) => {
           }}
         />
       </List>
-      <List>
-        <ListButton onClick={signIn}>Sign In</ListButton>
-        <ListButton>
-          <Link href="/RegisterOrganization/">Register Organization</Link>
-        </ListButton>
-        <BlockFooter>
-          Log in to organizational Admin Portal.
-          <br />
-        </BlockFooter>
-      </List>
+      <Block strong>
+        <Button fill preloader loading={isLoading} onClick={load}>
+          Sign In
+        </Button>
+      </Block>
+      <Block strong>
+        <List>
+          <Button>
+            <Link href="/RegisterOrganization/">Register Organization</Link>
+          </Button>
+        </List>
+      </Block>
+      <BlockFooter>
+        <br />
+        <br />
+        Log in to organizational Admin Portal.
+        <br />
+      </BlockFooter>
     </Page>
   );
 };

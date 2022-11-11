@@ -164,7 +164,6 @@ export default ({ f7router }) => {
           type="email"
           required
           validate
-          d
           placeholder="Your Organization Email"
           value={YourOrgEmail}
           onInput={(e) => {

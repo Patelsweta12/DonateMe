@@ -44,12 +44,8 @@ var routes = [{
       // App instance
       var app = router.app;
 
-      // Show Preloader
-      app.preloader.show();
-
       // User ID from request
       var userId = to.params.userId;
-
       // Simulate Ajax Request
       setTimeout(function () {
         // We got user data from request

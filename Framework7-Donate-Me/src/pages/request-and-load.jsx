@@ -3,10 +3,11 @@ import { Page, Navbar, Block, List, ListItem } from "framework7-react";
 
 const RequestAndLoad = (props) => {
   const { user } = props;
+  console.log(user);
 
   return (
     <Page>
-      <Navbar title={`${user.firstName} ${user.lastName}`} backLink="Back" />
+      <Navbar title={`${user.firstName} ${user.lastName}`} />
       <Block strong>{user.about}</Block>
       <List>
         {user.links.map((link, index) => (
