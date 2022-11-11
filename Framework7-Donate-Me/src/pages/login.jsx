@@ -8,20 +8,31 @@ import {
   ListButton,
   BlockFooter,
   Link,
-
 } from "framework7-react";
+import { db } from "../js/firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
+import { getDefaultAppConfig } from "@firebase/util";
 
 export default ({ f7router }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const signIn = () => {
-    f7.dialog.alert(`Username: ${username}<br>Password: ${password}`, () => {
-      f7router.back();
-    });
+    getData();
   };
-  const registerNow = () => {
 
-  };
+  // f7.dialog.alert(`Username: ${username}<br>Password: ${password}`, () => {
+  //   f7router.back();
+  // });
+  // };
+  const registerNow = () => {};
 
   return (
     <Page noToolbar noNavbar noSwipeback loginScreen>
@@ -48,7 +59,9 @@ export default ({ f7router }) => {
       </List>
       <List>
         <ListButton onClick={signIn}>Sign In</ListButton>
-        <ListButton><Link href="/RegisterOrganization/">Register Organization</Link></ListButton>
+        <ListButton>
+          <Link href="/RegisterOrganization/">Register Organization</Link>
+        </ListButton>
         <BlockFooter>
           Log in to organizational Admin Portal.
           <br />
