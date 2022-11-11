@@ -13,6 +13,10 @@ import {
   Block,
   ListButton,
   f7,
+  Actions,
+  ActionsGroup,
+  ActionsLabel,
+  ActionsButton,
 } from "framework7-react";
 import { db } from "../js/firebase";
 import { collection, addDoc, doc, getDocs } from "firebase/firestore";
@@ -26,7 +30,15 @@ export default ({ f7router }) => {
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
 
-  const RegisterNow = () => {
+  const navigateToHome = async () => {
+    f7router.navigate("/Home/");
+  };
+
+  const navigateToAdminPortalLogin = async () => {
+    f7router.navigate("/AdminPortal/");
+  };
+
+  const RegisterNow = async () => {
     const isEnable =
       YourOrgName.length > 0 &&
       YourOrgEmail.length > 0 &&
@@ -37,15 +49,74 @@ export default ({ f7router }) => {
       reEnterPassword.length > 0;
 
     if (isEnable) {
-      storeDataToDatabase(
-        YourOrgName,
-        YourOrgEmail,
-        OrgPhone,
-        YourCity,
-        Username,
-        password,
-        reEnterPassword
-      );
+      if (password === reEnterPassword) {
+        const dataA = await getDocs(collection(db, "OrganizationUser"));
+        if (dataA.empty) {
+          const docRef = await addDoc(collection(db, "OrganizationUser"), {
+            org_Name: YourOrgName,
+            org_Email: YourOrgEmail,
+            org_phone: OrgPhone,
+            org_city: YourCity,
+            org_userName: Username,
+            org_password: password,
+            org_verified: false,
+          });
+          console.log("Document written with ID: ", docRef.id);
+          f7.dialog.alert(
+            `Your Organization is pending on verification.<br>
+          Please allow 24 hours for request to be completed.`,
+            () => {
+              navigateToAdminPortalLogin();
+            }
+          );
+        } else {
+          var doesEmailExist = false;
+
+          await dataA.forEach((doc) => {
+            try {
+              if (doc.data().org_Email === YourOrgEmail) {
+                doesEmailExist = true;
+              }
+            } catch (error) {
+              f7.dialog.alert(`Error ${error}`, () => {
+                navigateToHome();
+              });
+            }
+          });
+
+          if (!doesEmailExist) {
+            const docRef = addDoc(collection(db, "OrganizationUser"), {
+              org_Name: YourOrgName,
+              org_Email: YourOrgEmail,
+              org_phone: OrgPhone,
+              org_city: YourCity,
+              org_userName: Username,
+              org_password: password,
+              org_verified: false,
+            });
+            console.log("Document written with ID: ", docRef.id);
+            f7.dialog.alert(
+              `Your Organization is pending on verification.<br>
+            Please allow 24 hours for request to be completed.`,
+              () => {
+                navigateToAdminPortalLogin();
+              }
+            );
+          } else {
+            f7.dialog.alert(
+              `User ${YourOrgEmail} is already exist try logging in`,
+              () => {
+                navigateToAdminPortalLogin();
+              }
+            );
+          }
+        }
+      } else {
+        f7.dialog.alert(
+          `Password and Re-Enter Password should be same`,
+          () => {}
+        );
+      }
     } else {
       f7.dialog.alert(`Please fill in entire form`, () => {});
     }
@@ -169,76 +240,3 @@ export default ({ f7router }) => {
     </Page>
   );
 };
-
-export async function storeDataToDatabase(
-  YourOrgName,
-  YourOrgEmail,
-  OrgPhone,
-  YourCity,
-  Username,
-  password,
-  reEnterPassword
-) {
-  if (password === reEnterPassword) {
-    const dataA = await getDocs(collection(db, "OrganizationUser"));
-    if (dataA.empty) {
-      await sendDataToDB(
-        YourOrgName,
-        YourOrgEmail,
-        OrgPhone,
-        YourCity,
-        Username,
-        password
-      );
-    } else {
-      dataA.forEach((doc) => {
-        try {
-          if (doc.data().org_Email === YourOrgEmail) {
-            f7.dialog.alert(
-              `User ${YourOrgEmail} is already exist try logging in`,
-              () => {}
-            );
-          } else {
-            sendDataToDB(
-              YourOrgName,
-              YourOrgEmail,
-              OrgPhone,
-              YourCity,
-              Username,
-              password
-            );
-          }
-        } catch (error) {
-          f7.dialog.alert(`Error ${error}`, () => {});
-        }
-      });
-    }
-  } else {
-    f7.dialog.alert(`Password and Re-Enter Password should be same`, () => {});
-  }
-}
-
-export async function sendDataToDB(
-  YourOrgName,
-  YourOrgEmail,
-  OrgPhone,
-  YourCity,
-  Username,
-  password
-) {
-  const docRef = addDoc(collection(db, "OrganizationUser"), {
-    org_Name: YourOrgName,
-    org_Email: YourOrgEmail,
-    org_phone: OrgPhone,
-    org_city: YourCity,
-    org_userName: Username,
-    org_password: password,
-    org_verified: false,
-  });
-  console.log("Document written with ID: ", docRef.id);
-  f7.dialog.alert(
-    `Your Organization is pending on verification.<br>
-  Please allow 24 hours for request to be completed.`,
-    () => {}
-  );
-}

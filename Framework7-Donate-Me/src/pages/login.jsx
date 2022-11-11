@@ -25,7 +25,9 @@ export default ({ f7router }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const signIn = () => {
-    getData();
+    // const encryptedPass = encrypt(password);
+    // const decryptedPass = decrypt(encryptedPass);
+    // console.log(encryptedPass, decryptedPass);
   };
 
   // f7.dialog.alert(`Username: ${username}<br>Password: ${password}`, () => {

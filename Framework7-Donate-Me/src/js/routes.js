@@ -11,6 +11,10 @@ var routes = [{
     component: HomePage,
   },
   {
+  path: '/Home/',
+  component: HomePage,
+  },
+  {
     path: '/AdminPortal/',
     component: AdminPortal,
   },
