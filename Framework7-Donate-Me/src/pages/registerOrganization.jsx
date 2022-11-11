@@ -30,13 +30,16 @@ export default ({ f7router }) => {
   const [Username, SetUsername] = useState("");
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const load = () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    RegisterNow();
+  };
 
   const navigateToHome = async () => {
     f7router.navigate("/Home/");
-  };
-
-  const navigateToAdminPortalLogin = async () => {
-    f7router.navigate("/AdminPortal/");
   };
 
   const RegisterNow = async () => {
@@ -67,12 +70,12 @@ export default ({ f7router }) => {
             org_password: encryptedPass,
             org_verified: false,
           });
-          console.log("Document written with ID: ", docRef.id);
           f7.dialog.alert(
             `Your Organization is pending on verification.<br>
-          Please allow 24 hours for request to be completed.`,
+          Please allow upto 24 hours for request to be completed.`,
             () => {
-              navigateToAdminPortalLogin();
+              setIsLoading(false);
+              navigateToHome();
             }
           );
         } else {
@@ -85,6 +88,7 @@ export default ({ f7router }) => {
               }
             } catch (error) {
               f7.dialog.alert(`Error ${error}`, () => {
+                setIsLoading(false);
                 navigateToHome();
               });
             }
@@ -104,46 +108,35 @@ export default ({ f7router }) => {
               org_password: encryptedPass,
               org_verified: false,
             });
-            console.log("Document written with ID: ", docRef.id);
+
             f7.dialog.alert(
               `Your Organization is pending on verification.<br>
-            Please allow 24 hours for request to be completed.`,
+            Please allow upto 24 hours for request to be completed.`,
               () => {
-                navigateToAdminPortalLogin();
+                setIsLoading(false);
+                navigateToHome();
               }
             );
           } else {
             f7.dialog.alert(
               `User ${YourOrgEmail} is already exist try logging in`,
               () => {
-                navigateToAdminPortalLogin();
+                setIsLoading(false);
+                navigateToHome();
               }
             );
           }
         }
       } else {
-        f7.dialog.alert(
-          `Password and Re-Enter Password should be same`,
-          () => {}
-        );
+        f7.dialog.alert(`Password and Re-Enter Password should be same`, () => {
+          setIsLoading(false);
+        });
       }
     } else {
-      f7.dialog.alert(`Please fill in entire form`, () => {});
+      f7.dialog.alert(`Please fill in entire form`, () => {
+        setIsLoading(false);
+      });
     }
-
-    // f7.dialog.alert(
-    //   `Organization Name : ${YourOrgName}<br>Organization Email : ${YourOrgEmail}<br>Phone Number : ${OrgPhone}<br> City : ${YourCity}<br>UserName : ${Username}<br>Password : ${password}<br> Re-Enter Password : ${reEnterPassword}`,
-    //   () => {}
-    // );
-  };
-  const [isLoading, setIsLoading] = useState(false);
-
-  const load = () => {
-    if (isLoading) return;
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
   };
 
   return (
@@ -243,7 +236,7 @@ export default ({ f7router }) => {
       </List>
       <BlockTitle>Submit Details</BlockTitle>
       <Block strong>
-        <Button fill onClick={RegisterNow}>
+        <Button fill preloader loading={isLoading} onClick={load}>
           Register
         </Button>
       </Block>

@@ -1,5 +1,7 @@
 import React, { useState, setInputs, Component } from "react";
 import { geolocated } from "react-geolocated";
+import { db } from "../js/firebase";
+import { collection, addDoc, doc, getDocs } from "firebase/firestore";
 import {
   Page,
   Navbar,
@@ -18,12 +20,19 @@ import {
 export default ({ f7router, Component }) => {
   const [DonorName, setDonorName] = useState("");
   const [DonorPhone, setDonorPhone] = useState("");
-  const [FoodDonation, setFoodDonation] = useState("");
+  const [DonationType, setDonationType] = useState("");
   const [DonationDesc, setDonationDesc] = useState("");
   const [LocationCheck, setLocation] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleFoodDonationRationButtonUpdate = (e) => {
-    setFoodDonation(e.target.value);
+  const load = () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    submitForm();
+  };
+
+  const handleDonationTypeRationButtonUpdate = (e) => {
+    setDonationType(e.target.value);
   };
 
   const handleLocationChecker = (e) => {
@@ -52,20 +61,93 @@ export default ({ f7router, Component }) => {
 
       // setLocation(`Joiye chhe... joiye chhee`);
     } else {
-      setLocation(`ni juve hutt`);
+      setLocation(`NA`);
     }
   };
 
-  const submitForm = () => {
-    console.log(`Donor name : ${DonorName}`);
-    console.log(`Donor Phone : ${DonorPhone}`);
-    console.log(`Donation type : ${FoodDonation}`);
-    console.log(`Donation Description : ${DonationDesc}`);
-    console.log(`Location Current : ${LocationCheck}`);
-    f7.dialog.alert(
-      `Donor name : ${DonorName}<br>Donor Phone : ${DonorPhone}<br>Donation type : ${FoodDonation}<br>Donation Description : ${DonationDesc}<br>Location Current : ${LocationCheck}`
-    ),
-      () => {};
+  const navigateToHome = async () => {
+    f7router.navigate("/Home/");
+  };
+
+  const submitForm = async () => {
+    const isEnable =
+      DonorName.length > 0 &&
+      DonorPhone.length > 0 &&
+      DonationType.length > 0 &&
+      DonationDesc.length > 0;
+
+    if (isEnable) {
+      const dataA = await getDocs(collection(db, "DonationData"));
+      if (dataA.empty) {
+        const docRef = await addDoc(collection(db, "DonationData"), {
+          DonorName: DonorName,
+          DonorPhone: DonorPhone,
+          DonationType: DonationType,
+          DonationDesc: DonationDesc,
+          LocationCheck: LocationCheck,
+          DonationRequested: false,
+        });
+        f7.dialog.alert(
+          `Your Donation request has been submitted.<br>
+           One of our registered Organization will contact you.`,
+          () => {
+            setIsLoading(false);
+            navigateToHome();
+          }
+        );
+      } else {
+        var doesPhoneExist = false;
+
+        await dataA.forEach((doc) => {
+          try {
+            if (doc.data().DonorPhone === DonorPhone) {
+              doesPhoneExist = true;
+            }
+          } catch (error) {
+            f7.dialog.alert(`Error ${error}`, () => {
+              setIsLoading(false);
+              navigateToHome();
+            });
+          }
+        });
+
+        if (!doesPhoneExist) {
+          const docRef = await addDoc(collection(db, "DonationData"), {
+            DonorName: DonorName,
+            DonorPhone: DonorPhone,
+            DonationType: DonationType,
+            DonationDesc: DonationDesc,
+            LocationCheck: LocationCheck,
+            DonationRequested: false,
+          });
+          f7.dialog.alert(
+            `Your Donation request has been submitted.<br>
+             One of our registered Organization will contact you.`,
+            () => {
+              setIsLoading(false);
+              navigateToHome();
+            }
+          );
+        } else {
+          f7.dialog.alert(
+            `Seems like you already have submitted Donation Request.<br>Please allow time for organizations to accept your request.`,
+            () => {
+              setIsLoading(false);
+              navigateToHome();
+            }
+          );
+        }
+      }
+    } else {
+      f7.dialog.alert(`Please fill in entire form`, () => {
+        setIsLoading(false);
+      });
+    }
+
+    // f7.dialog.alert(
+    //   `Donor name : ${DonorName}<br>Donor Phone : ${DonorPhone}<br>Donation type : ${DonationType}<br>Donation Description : ${DonationDesc}<br>Location Current : ${LocationCheck}`
+    // ),
+    //   () => {};
   };
 
   return (
@@ -75,6 +157,8 @@ export default ({ f7router, Component }) => {
       <BlockTitle>Your Details</BlockTitle>
       <List noHairlinesMd>
         <ListInput
+          required
+          validate
           label="Name"
           type="text"
           placeholder="Your name"
@@ -85,6 +169,8 @@ export default ({ f7router, Component }) => {
         ></ListInput>
 
         <ListInput
+          required
+          validate
           label="WhatsApp Phone Number"
           type="tel"
           placeholder="Phone"
@@ -97,41 +183,51 @@ export default ({ f7router, Component }) => {
         <BlockTitle>Choose Donation service</BlockTitle>
         <List>
           <ListItem
+            required
+            validate
             radio
             name="radio"
             value="Food Donation"
             title="Food Donation"
-            onChange={handleFoodDonationRationButtonUpdate}
+            onChange={handleDonationTypeRationButtonUpdate}
           ></ListItem>
           <ListItem
+            required
+            validate
             radio
             name="radio"
             value="Clothes Donation"
             title="Clothes Donation"
-            onChange={handleFoodDonationRationButtonUpdate}
+            onChange={handleDonationTypeRationButtonUpdate}
           ></ListItem>
           <ListItem
+            required
+            validate
             radio
             name="radio"
             value="Animal Walfare"
             title="Animal Walfare"
-            onChange={handleFoodDonationRationButtonUpdate}
+            onChange={handleDonationTypeRationButtonUpdate}
           ></ListItem>
 
           <ListItem
+            required
+            validate
             radio
             name="radio"
             value="Tree Plantation"
             title="Tree Plantation"
-            onChange={handleFoodDonationRationButtonUpdate}
+            onChange={handleDonationTypeRationButtonUpdate}
           ></ListItem>
         </List>
 
         <BlockTitle>Donation Discription</BlockTitle>
         <List>
           <ListInput
+            required
+            validate
             type="textarea"
-            placeholder="Provide Details"
+            placeholder="Provide Details about the items that you have for donation"
             resizable
             value={DonationDesc}
             onInput={(e) => {
@@ -143,6 +239,8 @@ export default ({ f7router, Component }) => {
         <BlockTitle>Location service </BlockTitle>
         <List>
           <ListItem
+            required
+            validate
             checkbox
             name="my-checkbox"
             value="Use my current location"
@@ -153,7 +251,7 @@ export default ({ f7router, Component }) => {
 
         <BlockTitle>Submit Details</BlockTitle>
         <Block strong>
-          <Button fill onClick={submitForm}>
+          <Button fill preloader loading={isLoading} onClick={load}>
             Submit
           </Button>
         </Block>
