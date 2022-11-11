@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CryptoJS from "crypto-js";
 import {
   f7,
   Page,
@@ -25,9 +26,9 @@ export default ({ f7router }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const signIn = () => {
-    // const encryptedPass = encrypt(password);
-    // const decryptedPass = decrypt(encryptedPass);
-    // console.log(encryptedPass, decryptedPass);
+    var bytes = CryptoJS.AES.decrypt("use String here", "my-secret-key@123");
+    var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    console.log(decryptedPass);
   };
 
   // f7.dialog.alert(`Username: ${username}<br>Password: ${password}`, () => {

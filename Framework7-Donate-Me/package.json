@@ -19,6 +19,7 @@
     "Samsung >= 12"
   ],
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "deploy-react": "^2.2.11",
     "dom7": "^4.0.4",
     "firebase": "^9.13.0",

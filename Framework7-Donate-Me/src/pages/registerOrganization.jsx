@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CryptoJS from "crypto-js";
 import {
   Page,
   Navbar,
@@ -52,13 +53,18 @@ export default ({ f7router }) => {
       if (password === reEnterPassword) {
         const dataA = await getDocs(collection(db, "OrganizationUser"));
         if (dataA.empty) {
+          const encryptedPass = CryptoJS.AES.encrypt(
+            JSON.stringify(password),
+            "my-secret-key@123"
+          ).toString();
+
           const docRef = await addDoc(collection(db, "OrganizationUser"), {
             org_Name: YourOrgName,
             org_Email: YourOrgEmail,
             org_phone: OrgPhone,
             org_city: YourCity,
             org_userName: Username,
-            org_password: password,
+            org_password: encryptedPass,
             org_verified: false,
           });
           console.log("Document written with ID: ", docRef.id);
@@ -85,13 +91,17 @@ export default ({ f7router }) => {
           });
 
           if (!doesEmailExist) {
+            const encryptedPass = CryptoJS.AES.encrypt(
+              JSON.stringify(password),
+              "my-secret-key@123"
+            ).toString();
             const docRef = addDoc(collection(db, "OrganizationUser"), {
               org_Name: YourOrgName,
               org_Email: YourOrgEmail,
               org_phone: OrgPhone,
               org_city: YourCity,
               org_userName: Username,
-              org_password: password,
+              org_password: encryptedPass,
               org_verified: false,
             });
             console.log("Document written with ID: ", docRef.id);
