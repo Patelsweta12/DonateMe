@@ -77,6 +77,8 @@ const RequestAndLoad = (props) => {
   return (
     <Page noSwipeback>
       <Navbar title={`${user.firstName} ${user.lastName}`} />
+      <br />
+      <br />
       <Block strong>
         {user.about}
         Following are donation requests submitted by users:
