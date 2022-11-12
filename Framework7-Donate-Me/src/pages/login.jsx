@@ -42,6 +42,7 @@ async function getDonationRequestList() {
       const DonorName = doc.data().DonorName;
       const DonorPhone = doc.data().DonorPhone;
       const LocationCheck = doc.data().LocationCheck;
+      const TimeStamp = doc.data().TimeStamp;
 
       arayDonationRequestList.push({
         DonationDesc: DonationDesc,
@@ -50,6 +51,7 @@ async function getDonationRequestList() {
         DonorName: DonorName,
         DonorPhone: DonorPhone,
         LocationCheck: LocationCheck,
+        TimeStamp: TimeStamp,
       });
     });
   } catch (error) {
@@ -85,6 +87,32 @@ export default ({ f7router }) => {
     if (isLoading) return;
     setIsLoading(true);
     await signIn();
+  };
+
+  const getTimestamp = () => {
+    const dateObject = new Date();
+    // current date
+    // adjust 0 before single digit date
+    const date = `0 ${dateObject.getDate()}`.slice(-2);
+    // current month
+    const month = `0 ${dateObject.getMonth() + 1}`.slice(-2);
+    // current year
+    const year = dateObject.getFullYear();
+    // current hours
+    var hours = dateObject.getHours();
+    // current minutes
+    var minutes = dateObject.getMinutes();
+    // current seconds
+    const seconds = dateObject.getSeconds();
+    // prints date & time in YYYY-MM-DD HH:MM:SS format
+
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + ":" + seconds + " " + ampm;
+
+    return `${date}/${month}/${year} ${strTime}`;
   };
 
   const signIn = async () => {

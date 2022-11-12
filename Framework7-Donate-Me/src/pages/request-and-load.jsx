@@ -43,6 +43,32 @@ const RequestAndLoad = (props) => {
     f7router.navigate("/loadDonationData/");
   };
 
+  const getTimestamp = () => {
+    const dateObject = new Date();
+    // current date
+    // adjust 0 before single digit date
+    const date = `0 ${dateObject.getDate()}`.slice(-2);
+    // current month
+    const month = `0 ${dateObject.getMonth() + 1}`.slice(-2);
+    // current year
+    const year = dateObject.getFullYear();
+    // current hours
+    var hours = dateObject.getHours();
+    // current minutes
+    var minutes = dateObject.getMinutes();
+    // current seconds
+    const seconds = dateObject.getSeconds();
+    // prints date & time in YYYY-MM-DD HH:MM:SS format
+
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + ":" + seconds + " " + ampm;
+
+    return `${date}/${month}/${year} ${strTime}`;
+  };
+
   async function updateDB(phnoe) {
     const tmpRequests = await getDocs(collection(db, "DonationData"));
     var docId = "";
@@ -60,6 +86,7 @@ const RequestAndLoad = (props) => {
       var docRef = await doc(db, "DonationData", docId);
       const data = {
         DonationRequested: true,
+        TimeStamp: getTimestamp(),
       };
       await updateDoc(docRef, data);
       await navigateUrl();
@@ -94,19 +121,53 @@ const RequestAndLoad = (props) => {
                 />
               </div>
               <div className="demo-facebook-name">
-                Name : {number.DonorName}
+                <p>
+                  <b>Name : </b>
+                  {number.DonorName}
+                </p>
               </div>
             </CardHeader>
             <CardContent padding={false}>
               <Block strong>
-                <List> Phone : {number.DonorPhone}</List>
+                <List>
+                  <p>
+                    <b>Phone : </b>
+                    {number.DonorPhone}
+                  </p>
+                </List>
               </Block>
               <Block strong>
-                <List> Donation Type : {number.DonationType}</List>
+                <List>
+                  <p>
+                    <b>Donation Type : </b>
+                    {number.DonationType}
+                  </p>
+                </List>
               </Block>
               <Block strong>
-                <List> Description : {number.DonationDesc}</List>
+                <List>
+                  <p>
+                    <b>Description : </b>
+                    {number.DonationDesc}
+                  </p>
+                </List>
               </Block>
+              <Block strong>
+                <List>
+                  {number.DonationRequested ? (
+                    <p>
+                      <b>Approved On : </b>
+                      {number.TimeStamp}
+                    </p>
+                  ) : (
+                    <p>
+                      <b>Requested On : </b>
+                      {number.TimeStamp}
+                    </p>
+                  )}
+                </List>
+              </Block>
+
               <Block strong>
                 <Button outline>
                   <Link href={number.LocationCheck} external>

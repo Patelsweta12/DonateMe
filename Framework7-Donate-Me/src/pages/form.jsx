@@ -26,6 +26,32 @@ export default ({ f7router, Component }) => {
   const [LocationCheck, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const getTimestamp = () => {
+    const dateObject = new Date();
+    // current date
+    // adjust 0 before single digit date
+    const date = `0 ${dateObject.getDate()}`.slice(-2);
+    // current month
+    const month = `0 ${dateObject.getMonth() + 1}`.slice(-2);
+    // current year
+    const year = dateObject.getFullYear();
+    // current hours
+    var hours = dateObject.getHours();
+    // current minutes
+    var minutes = dateObject.getMinutes();
+    // current seconds
+    const seconds = dateObject.getSeconds();
+    // prints date & time in YYYY-MM-DD HH:MM:SS format
+
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + ":" + seconds + " " + ampm;
+
+    return `${date}/${month}/${year} ${strTime}`;
+  };
+
   const load = () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -80,6 +106,7 @@ export default ({ f7router, Component }) => {
     if (isEnable) {
       const dataA = await getDocs(collection(db, "DonationData"));
       if (dataA.empty) {
+        var timeStamp = getTimestamp();
         const docRef = await addDoc(collection(db, "DonationData"), {
           DonorName: DonorName,
           DonorPhone: DonorPhone,
@@ -87,9 +114,10 @@ export default ({ f7router, Component }) => {
           DonationDesc: DonationDesc,
           LocationCheck: LocationCheck,
           DonationRequested: false,
+          TimeStamp: timeStamp,
         });
         f7.dialog.alert(
-          `Your Donation request has been submitted.<br>
+          `Your Donation request has been submitted on ${timeStamp}.<br>
            One of our registered Organization will contact you.`,
           () => {
             setIsLoading(false);
@@ -98,11 +126,13 @@ export default ({ f7router, Component }) => {
         );
       } else {
         var doesPhoneExist = false;
+        var previousTimeStamp = "";
 
         await dataA.forEach((doc) => {
           try {
             if (doc.data().DonorPhone === DonorPhone) {
               doesPhoneExist = true;
+              previousTimeStamp = doc.data().TimeStamp;
             }
           } catch (error) {
             f7.dialog.alert(`Error ${error}`, () => {
@@ -113,6 +143,7 @@ export default ({ f7router, Component }) => {
         });
 
         if (!doesPhoneExist) {
+          var timeStamp = getTimestamp();
           const docRef = await addDoc(collection(db, "DonationData"), {
             DonorName: DonorName,
             DonorPhone: DonorPhone,
@@ -120,9 +151,10 @@ export default ({ f7router, Component }) => {
             DonationDesc: DonationDesc,
             LocationCheck: LocationCheck,
             DonationRequested: false,
+            TimeStamp: timeStamp,
           });
           f7.dialog.alert(
-            `Your Donation request has been submitted.<br>
+            `Your Donation request has been submitted on ${timeStamp}.<br>
              One of our registered Organization will contact you.`,
             () => {
               setIsLoading(false);
@@ -131,7 +163,7 @@ export default ({ f7router, Component }) => {
           );
         } else {
           f7.dialog.alert(
-            `Seems like you already have submitted Donation Request.<br>Please allow time for organizations to accept your request.`,
+            `Seems like you already have submitted Donation Request on ${previousTimeStamp}.<br>Please allow time for organizations to accept your request.`,
             () => {
               setIsLoading(false);
               navigateToHome();
