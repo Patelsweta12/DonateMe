@@ -128,45 +128,40 @@ const RequestAndLoad = (props) => {
               </div>
             </CardHeader>
             <CardContent padding={false}>
-              <Block strong>
-                <List>
+              <List>
+                <p>
+                  <b>Phone : </b>
+                  {number.DonorPhone}
+                </p>
+              </List>
+
+              <List>
+                <p>
+                  <b>Donation Type : </b>
+                  {number.DonationType}
+                </p>
+              </List>
+
+              <List>
+                <p>
+                  <b>Description : </b>
+                  {number.DonationDesc}
+                </p>
+              </List>
+
+              <List>
+                {number.DonationRequested ? (
                   <p>
-                    <b>Phone : </b>
-                    {number.DonorPhone}
+                    <b>Approved On : </b>
+                    {number.TimeStamp}
                   </p>
-                </List>
-              </Block>
-              <Block strong>
-                <List>
+                ) : (
                   <p>
-                    <b>Donation Type : </b>
-                    {number.DonationType}
+                    <b>Requested On : </b>
+                    {number.TimeStamp}
                   </p>
-                </List>
-              </Block>
-              <Block strong>
-                <List>
-                  <p>
-                    <b>Description : </b>
-                    {number.DonationDesc}
-                  </p>
-                </List>
-              </Block>
-              <Block strong>
-                <List>
-                  {number.DonationRequested ? (
-                    <p>
-                      <b>Approved On : </b>
-                      {number.TimeStamp}
-                    </p>
-                  ) : (
-                    <p>
-                      <b>Requested On : </b>
-                      {number.TimeStamp}
-                    </p>
-                  )}
-                </List>
-              </Block>
+                )}
+              </List>
 
               <Block strong>
                 <Button outline>
