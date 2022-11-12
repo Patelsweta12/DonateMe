@@ -16,10 +16,6 @@ import {
 const AboutPage = () => (
   <Page>
     <Navbar title="About" backLink="Back" />
-    {/* Toolbar */}
-    <Toolbar bottom>
-      <Link>Right Link</Link>
-    </Toolbar>
 
     <Card expandable>
       <CardContent padding={false}>

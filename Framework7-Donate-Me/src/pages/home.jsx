@@ -36,10 +36,7 @@ const HomePage = () => (
       <NavTitle sliding>Donate Me</NavTitle>
       <NavTitleLarge>Donate Me</NavTitleLarge>
     </Navbar>
-    {/* Toolbar */}
-    <Toolbar bottom>
-      <Link>Right Link</Link>
-    </Toolbar>
+
     {/* Page content */}
 
     <Card className="demo-facebook-card">
@@ -105,22 +102,6 @@ const HomePage = () => (
         </div>
       </CardContent>
     </Card>
-
-    <BlockTitle>Modals</BlockTitle>
-    <Block strong>
-      <Row>
-        <Col width="50">
-          <Button fill raised popupOpen="#my-popup">
-            Popup
-          </Button>
-        </Col>
-        <Col width="50">
-          {/* <Button fill raised loginScreenOpen="#my-login-screen">
-            Organization Log In
-          </Button> */}
-        </Col>
-      </Row>
-    </Block>
   </Page>
 );
 export default HomePage;

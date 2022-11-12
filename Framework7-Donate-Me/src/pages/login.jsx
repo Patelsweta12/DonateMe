@@ -179,10 +179,6 @@ export default ({ f7router }) => {
   const AboutPage = () => (
     <Page>
       <Navbar title="About" backLink="Back" />
-      {/* Toolbar */}
-      <Toolbar bottom>
-        <Link>Right Link</Link>
-      </Toolbar>
 
       <Card
         title="Card header"

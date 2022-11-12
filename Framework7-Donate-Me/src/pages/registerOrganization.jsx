@@ -142,10 +142,7 @@ export default ({ f7router }) => {
   return (
     <Page name="Register Your Organization">
       <Navbar title="Register Your Organization" backLink="Back"></Navbar>
-      {/* Toolbar */}
-      <Toolbar bottom>
-        <Link>Right Link</Link>
-      </Toolbar>
+
       <BlockTitle>Your Details</BlockTitle>
       <List noHairlinesMd>
         <ListInput
