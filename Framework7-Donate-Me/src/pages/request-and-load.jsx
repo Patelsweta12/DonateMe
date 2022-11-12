@@ -75,7 +75,7 @@ const RequestAndLoad = (props) => {
   }
 
   return (
-    <Page noToolbar noNavbar noSwipeback>
+    <Page noSwipeback>
       <Navbar title={`${user.firstName} ${user.lastName}`} />
       <Block strong>
         {user.about}
