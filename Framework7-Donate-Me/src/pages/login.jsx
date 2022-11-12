@@ -77,6 +77,11 @@ export default ({ f7router }) => {
   };
 
   const load = async () => {
+    const encryptedPass = CryptoJS.AES.encrypt(
+      JSON.stringify("Admin"),
+      "my-secret-key@123"
+    ).toString();
+    console.log(encryptedPass);
     if (isLoading) return;
     setIsLoading(true);
     await signIn();
