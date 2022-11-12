@@ -46,27 +46,32 @@ const RequestAndLoad = (props) => {
   async function updateDB(phnoe) {
     const tmpRequests = await getDocs(collection(db, "DonationData"));
     var docId = "";
+    var tmpBool = null;
     await tmpRequests.forEach(async (doc) => {
-      const donorPhone = doc.data().DonorPhone;
+      const donorPhone = await doc.data().DonorPhone;
 
       if (donorPhone === phnoe) {
         docId = doc.id;
+        tmpBool = doc.data().DonationRequested;
       }
     });
-
-    var docRef = await doc(db, "DonationData", docId);
-    const data = {
-      DonationRequested: true,
-    };
-    await updateDoc(docRef, data);
+    console.log(tmpBool);
+    if (!tmpBool) {
+      var docRef = await doc(db, "DonationData", docId);
+      const data = {
+        DonationRequested: true,
+      };
+      await updateDoc(docRef, data);
+      await navigateUrl();
+    } else {
+      f7.dialog.alert(`It has already been Approved!`, () => {});
+    }
   }
 
-  async function navigateUrl(url) {
-    return (
-      <Link href={url} external>
-        View Donor Location
-      </Link>
-    );
+  async function navigateUrl() {
+    f7.dialog.alert(`Log in again to see update`, () => {
+      f7router.navigate("/AdminPortal/");
+    });
   }
 
   return (
@@ -74,7 +79,6 @@ const RequestAndLoad = (props) => {
       <Navbar title={`${user.firstName} ${user.lastName}`} />
       <Block strong>
         {user.about}
-        <br />
         Following are donation requests submitted by users:
       </Block>
       <List>
@@ -91,42 +95,56 @@ const RequestAndLoad = (props) => {
               <div className="demo-facebook-name">
                 Name : {number.DonorName}
               </div>
-              <div className="demo-facebook-date">
-                Phone : {number.DonorPhone}
-              </div>
             </CardHeader>
             <CardContent padding={false}>
-              <List> Donation Type : {number.DonationType}</List>
-              <List> Description : {number.DonationDesc}</List>
+              <Block strong>
+                <List> Phone : {number.DonorPhone}</List>
+              </Block>
+              <Block strong>
+                <List> Donation Type : {number.DonationType}</List>
+              </Block>
+              <Block strong>
+                <List> Description : {number.DonationDesc}</List>
+              </Block>
+              <Block strong>
+                <Button outline>
+                  <Link href={number.LocationCheck} external>
+                    View Donor Location
+                  </Link>
+                </Button>
+              </Block>
+
+              <Block strong>
+                <Button outline>
+                  <Link
+                    href={
+                      "https://wa.me/91" +
+                      number.DonorPhone +
+                      "?text=Dear " +
+                      number.DonorName +
+                      ",%0a%0aI am reaching out from, " +
+                      user.firstName +
+                      ".%0aWe are interested in your donation request of " +
+                      number.DonationType +
+                      ".%0a%0aLet's communicate further and make arrangements to receive your donation.%0a%0aThank You!"
+                    }
+                    external
+                  >
+                    Communicate via WhatsApp
+                  </Link>
+                </Button>
+              </Block>
+
+              <Block strong>
+                <Button
+                  outline
+                  onClick={async () => updateDB(number.DonorPhone)}
+                >
+                  Approve
+                </Button>
+              </Block>
             </CardContent>
             <CardFooter className="no-border">
-              <Button outline>
-                <Link href={number.LocationCheck} external>
-                  View Donor Location
-                </Link>
-              </Button>
-              <Button outline>
-                <Link
-                  href={
-                    "https://web.whatsapp.com/send?phone=91" +
-                    number.DonorPhone +
-                    "&text=Dear " +
-                    number.DonorName +
-                    ",%0a%0aI am reaching out from, " +
-                    user.firstName +
-                    ".%0aWe are interested in your donation request of " +
-                    number.DonationType +
-                    ".%0a%0aLet's communicate further and make arrangements to receive your donation.%0a%0aThank You!"
-                  }
-                  external
-                >
-                  Communicate via WhatsApp
-                </Link>
-              </Button>
-              <Button outline onClick={async () => updateDB(number.DonorPhone)}>
-                Approve
-              </Button>
-
               {number.DonationRequested ? (
                 <Badge color="orange">IN PROGRESS</Badge>
               ) : (
