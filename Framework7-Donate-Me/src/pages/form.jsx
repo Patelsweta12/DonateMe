@@ -15,6 +15,7 @@ import {
   Range,
   Block,
   f7,
+  TextEditor,
 } from "framework7-react";
 
 export default ({ f7router, Component }) => {
@@ -172,7 +173,8 @@ export default ({ f7router, Component }) => {
           required
           validate
           label="WhatsApp Phone Number"
-          type="tel"
+          type="text"
+          pattern="^\d{10}$"
           placeholder="Phone"
           value={DonorPhone}
           onInput={(e) => {
@@ -223,17 +225,15 @@ export default ({ f7router, Component }) => {
 
         <BlockTitle>Donation Discription</BlockTitle>
         <List>
-          <ListInput
+          <TextEditor
             required
             validate
-            type="textarea"
-            placeholder="Provide Details about the items that you have for donation"
-            resizable
+            placeholder="Provide Details about the items that you have for donation..."
+            mode="keyboard-toolbar"
+            style={{ "--f7-text-editor-height": "150px" }}
             value={DonationDesc}
-            onInput={(e) => {
-              setDonationDesc(e.target.value);
-            }}
-          ></ListInput>
+            onTextEditorChange={(value) => setDonationDesc(value)}
+          />
         </List>
 
         <BlockTitle>Location service </BlockTitle>

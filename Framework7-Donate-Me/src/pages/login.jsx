@@ -21,8 +21,41 @@ import {
   Block,
 } from "framework7-react";
 import { db } from "../js/firebase";
-import { collection, addDoc, doc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { getDefaultAppConfig } from "@firebase/util";
+export var arayDonationRequestList = [];
+
+async function getDonationRequestList() {
+  const tmpRequests = await getDocs(collection(db, "DonationData"));
+  arayDonationRequestList = [];
+  try {
+    await tmpRequests.forEach((doc) => {
+      const DonationDesc = doc.data().DonationDesc;
+      const DonationRequested = doc.data().DonationRequested;
+      const DonationType = doc.data().DonationType;
+      const DonorName = doc.data().DonorName;
+      const DonorPhone = doc.data().DonorPhone;
+      const LocationCheck = doc.data().LocationCheck;
+
+      arayDonationRequestList.push({
+        DonationDesc: DonationDesc,
+        DonationRequested: DonationRequested,
+        DonationType: DonationType,
+        DonorName: DonorName,
+        DonorPhone: DonorPhone,
+        LocationCheck: LocationCheck,
+      });
+    });
+  } catch (error) {
+    f7.dialog.alert(`Error ${error}`, () => {});
+  }
+}
 
 export default ({ f7router }) => {
   const [username, setUsername] = useState("");
@@ -73,8 +106,8 @@ export default ({ f7router }) => {
           try {
             if (doc.data().org_Email === username) {
               isUserEmailLocated = true;
-              console.log(doc.data());
               dbPassword = doc.data().org_password;
+              orgName = doc.data().org_Name;
               isOrganizationRegistered = doc.data().org_verified;
             }
           } catch (error) {
@@ -124,8 +157,9 @@ export default ({ f7router }) => {
           isOrganizationRegistered &&
           isPasswordValidated
         ) {
-          userURl = userURl + `${username}/`;
+          userURl = userURl + `${username}/OrgName/${orgName}/`;
           loginSuccess();
+          await getDonationRequestList();
         }
       }
     } else {

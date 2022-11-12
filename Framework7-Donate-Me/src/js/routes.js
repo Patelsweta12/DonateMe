@@ -6,7 +6,9 @@ import RequestAndLoad from '../pages/request-and-load.jsx';
 import NotFoundPage from '../pages/404.jsx';
 import AdminPortal from '../pages/login.jsx';
 import RegisterOrganization from '../pages/registerOrganization.jsx'
-var routes = [{
+import { collection, addDoc, doc, getDocs } from "firebase/firestore";
+import { db } from "../js/firebase";
+var routes  = [{
     path: '/',
     component: HomePage,
   },
@@ -35,7 +37,7 @@ var routes = [{
     component: DynamicRoutePage,
   },
   {
-    path: '/request-and-load/user/:userId/',
+    path: '/request-and-load/user/:userId/OrgName/:orgName/',
     async: function ({
       router,
       to,
@@ -46,13 +48,17 @@ var routes = [{
 
       // User ID from request
       var userId = to.params.userId;
+      var orgName = to.params.orgName;
+
+      
+     
       // Simulate Ajax Request
       setTimeout(function () {
         // We got user data from request
         var user = {
-          firstName: 'Vladimir',
-          lastName: 'Kharlampidi',
-          about: 'Hello, i am creator of Framework7! Hope you like it!',
+          firstName: orgName,
+          lastName: userId,
+          about: `Hello, You have loged in for Organization, ${orgName}.`,
           links: [{
               title: 'Framework7 Website',
               url: 'http://framework7.io',
